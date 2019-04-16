@@ -1,6 +1,9 @@
 var PROD = process.argv.indexOf('-p') >= 0;
 var webpack = require('webpack');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+var {resolve} = require("path");
+
+const modules = resolve(__dirname, "node_modules");
 
 module.exports = {
     plugins: [
@@ -22,5 +25,8 @@ module.exports = {
     },
     externals: {
         'echarts/lib/echarts': 'echarts'
+    },
+    resolve: {
+        modules: [resolve(modules, '@sct'), 'node_modules'],
     }
 };
