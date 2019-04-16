@@ -1,0 +1,26 @@
+diff --git a/node_modules/claygl/src/Renderer.js b/node_modules/claygl/src/Renderer.js
+index 829d834..681420f 100644
+--- a/node_modules/claygl/src/Renderer.js
++++ b/node_modules/claygl/src/Renderer.js
+@@ -59,7 +59,7 @@ function PlaceHolderTexture(renderer) {
+     this.bind = function (renderer) {
+         if (!blankCanvas) {
+             // TODO Environment not support createCanvas.
+-            blankCanvas = vendor.createCanvas();
++            blankCanvas = document.createElement("canvas");
+             blankCanvas.width = blankCanvas.height = 1;
+             blankCanvas.getContext('2d');
+         }
+diff --git a/node_modules/claygl/src/claygl.js b/node_modules/claygl/src/claygl.js
+index 4a75d3f..cfe8293 100644
+--- a/node_modules/claygl/src/claygl.js
++++ b/node_modules/claygl/src/claygl.js
+@@ -363,4 +363,8 @@ var vr = {
+     StereoCamera : StereoCamera$118
+ };
+ export { vr };
++
++export function setCanvasCreator(creator) {
++    vendor$34.createCanvas = creator;
++}
+ ;
