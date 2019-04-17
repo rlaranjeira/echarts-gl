@@ -12,6 +12,7 @@ import './src/chart/scatter3D';
 import './src/chart/lines3D';
 import './src/chart/polygons3D';
 import './src/chart/surface';
+import './src/chart/colormap3D';
 import './src/chart/map3D';
 
 import './src/chart/scatterGL';

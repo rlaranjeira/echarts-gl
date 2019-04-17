@@ -10,7 +10,7 @@ function isPointsNaN(pt) {
     return isNaN(pt[0]) || isNaN(pt[1]) || isNaN(pt[2]);
 }
 
-echarts.extendChartView({
+export default echarts.extendChartView({
 
     type: 'surface',
 

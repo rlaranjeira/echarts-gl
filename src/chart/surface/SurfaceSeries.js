@@ -11,6 +11,14 @@ var SurfaceSeries = echarts.extendSeriesModel({
 
     visualColorAccessPath: 'itemStyle.color',
 
+    init: function (option, parentModel, ecModel, extraOpt) {
+        SurfaceSeries.superApply(this, 'init', arguments);
+    },
+
+    mergeOption: function (newSeriesOption, ecModel) {
+        SurfaceSeries.superApply(this, 'mergeOption', arguments);
+    },
+
     formatTooltip: function (dataIndex) {
         return formatTooltip(this, dataIndex);
     },
