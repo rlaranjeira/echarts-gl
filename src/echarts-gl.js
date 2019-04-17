@@ -57,7 +57,9 @@ function checkVersion(version, name) {
     if ((version.replace('.', '') - 0) < (deps[name].replace('.', '') - 0)) {
         versionTooOldMsg(name);
     }
-    console.log('Loaded ' + name + ', version ' + version);
+    if (__DEV__) {
+        console.log('Loaded ' + name + ', version ' + version);
+    }
 }
 checkVersion(clayVersion, 'claygl');
 checkVersion(echarts.version, 'echarts');
