@@ -113,6 +113,7 @@ export default echarts.extendChartView({
 
     _initHandler: function (seriesModel, api) {
         var data = seriesModel.getData();
+        var dataCount = data.count();
         var surfaceMesh = this._surfaceMesh;
 
         var coordSys = seriesModel.coordinateSystem;
@@ -148,7 +149,7 @@ export default echarts.extendChartView({
                 var minDist = Infinity;
                 var dataIndex = -1;
                 var item = [];
-                for (var i = 0; i < data.count(); i++) {
+                for (var i = 0; i < dataCount; i++) {
                     item[0] = data.get('x', i);
                     item[1] = data.get('y', i);
                     item[2] = data.get('z', i);
@@ -187,15 +188,13 @@ export default echarts.extendChartView({
 
         var geometry = surfaceMesh.geometry;
         var data = seriesModel.getData();
+        var dataCount = data.count();
         var pointsArr = data.getLayout('points');
 
-        var invalidDataCount = 0;
-        data.each(function (idx) {
-            if (!data.hasValue(idx)) {
-                invalidDataCount++;
-            }
+        var invalidData = !data.every(function (idx) {
+            return data.hasValue(idx);
         });
-        var needsSplitQuad = invalidDataCount || showWireframe;
+        var needsSplitQuad = invalidData || showWireframe;
 
         var positionAttr = geometry.attributes.position;
         var normalAttr = geometry.attributes.normal;
@@ -269,14 +268,9 @@ export default echarts.extendChartView({
             var vertexNormals = new Float32Array(pointsArr.length);
             var vertexColors = new Float32Array(pointsArr.length / 3 * 4);
 
-            for (var i = 0; i < data.count(); i++) {
+            for (var i = 0; i < dataCount; i++) {
                 if (data.hasValue(i)) {
                     var rgbaArr = graphicGL.parseColor(data.getItemVisual(i, 'color'));
-                    var opacity = data.getItemVisual(i, 'opacity');
-                    rgbaArr[3] *= opacity;
-                    if (rgbaArr[3] < 0.99) {
-                        isTransparent = true;
-                    }
                     for (var k = 0; k < 4; k++) {
                         vertexColors[i * 4 + k] = rgbaArr[k];
                     }
@@ -380,15 +374,10 @@ export default echarts.extendChartView({
         }
         else {
             var uvArr = [];
-            for (var i = 0; i < data.count(); i++) {
+            for (var i = 0; i < dataCount; i++) {
                 uvArr[0] = (i % column) / (column - 1);
                 uvArr[1] = Math.floor(i / column) / (row - 1);
                 var rgbaArr = graphicGL.parseColor(data.getItemVisual(i, 'color'));
-                var opacity = data.getItemVisual(i, 'opacity');
-                rgbaArr[3] *= opacity;
-                if (rgbaArr[3] < 0.99) {
-                    isTransparent = true;
-                }
                 colorAttr.set(i, rgbaArr);
                 texcoordAttr.set(i, uvArr);
             }
@@ -430,11 +419,11 @@ export default echarts.extendChartView({
         var rowCount = 0;
         var columnCount = 0;
         var prevColumnCount = 0;
-
+        var dataCount = data.count();
         var rowDim = isParametric ? 'u' : 'x';
 
         // Check data format
-        for (var i = 0; i < data.count(); i++) {
+        for (var i = 0; i < dataCount; i++) {
             var x = data.get(rowDim, i);
             if (x < prevX) {
                 if (prevColumnCount && prevColumnCount !== columnCount) {
