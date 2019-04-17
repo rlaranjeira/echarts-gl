@@ -8,7 +8,6 @@
     }
   ],
   "scripts": {
-    "postinstall": "patch-package",
     "build": "node build/glsl2js.js && node node_modules/webpack/bin/webpack.js && node node_modules/webpack/bin/webpack.js -p",
     "dev": "node node_modules/webpack/bin/webpack.js -w --devtool eval-cheap-module-source-map",
     "preversion": "npm run build",
@@ -39,7 +38,6 @@
     "glob": "^7.1.1",
     "http-server": "^0.10.0",
     "maptalks": "^0.38.0",
-    "patch-package": "6.1.2",
     "rollup": "^0.52.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
