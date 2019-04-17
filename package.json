@@ -8,7 +8,7 @@
     }
   ],
   "scripts": {
-    "prepare": "patch-package",
+    "postinstall": "patch-package",
     "build": "node build/glsl2js.js && node node_modules/webpack/bin/webpack.js && node node_modules/webpack/bin/webpack.js -p",
     "dev": "node node_modules/webpack/bin/webpack.js -w --devtool eval-cheap-module-source-map",
     "preversion": "npm run build",
