@@ -1,6 +1,6 @@
 import SurfaceSeries from '../surface/SurfaceSeries';
 import createList from '../common/createList';
-import * as zrUtil from 'zrender/lib/core/util';
+import zrUtil from 'zrender/lib/core/util';
 
 var isEmptyObject = zrUtil.isEmptyObject;
 
