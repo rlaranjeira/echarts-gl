@@ -1,7 +1,8 @@
-import echarts from 'echarts/lib/echarts';
 import axisDefault from './axis3DDefault';
 
 import OrdinalMeta from 'echarts/lib/data/OrdinalMeta';
+
+import zrUtil from 'zrender/lib/core/util';
 
 var AXIS_TYPES = ['value', 'category', 'time', 'log'];
 /**
@@ -13,7 +14,7 @@ var AXIS_TYPES = ['value', 'category', 'time', 'log'];
  */
 export default function (dim, BaseAxisModelClass, axisTypeDefaulter, extraDefaultOption) {
 
-    echarts.util.each(AXIS_TYPES, function (axisType) {
+    zrUtil.each(AXIS_TYPES, function (axisType) {
 
         BaseAxisModelClass.extend({
 
@@ -27,8 +28,8 @@ export default function (dim, BaseAxisModelClass, axisTypeDefaulter, extraDefaul
             mergeDefaultAndTheme: function (option, ecModel) {
 
                 var themeModel = ecModel.getTheme();
-                echarts.util.merge(option, themeModel.get(axisType + 'Axis3D'));
-                echarts.util.merge(option, this.getDefaultOption());
+                zrUtil.merge(option, themeModel.get(axisType + 'Axis3D'));
+                zrUtil.merge(option, this.getDefaultOption());
 
                 option.type = axisTypeDefaulter(dim, option);
             },
@@ -36,12 +37,32 @@ export default function (dim, BaseAxisModelClass, axisTypeDefaulter, extraDefaul
             /**
              * @override
              */
-            optionUpdated: function () {
+            optionUpdated: function (newOption, isInit) {
                 var thisOption = this.option;
+
+                // By default, let's assume that something has changed
+                this.optionChanged = true;
+
+                // Avoid updating model if option is empty
+                if (
+                    !isInit &&
+                    zrUtil.isEmptyObject(newOption)
+                ) {
+
+                    // flag that option didn't changed
+                    this.optionChanged = false;
+
+                    // Avoid calling parent optionUpdated
+                    return;
+                }
 
                 if (thisOption.type === 'category') {
                     this.__ordinalMeta = OrdinalMeta.createByAxisModel(this);
                 }
+            },
+
+            optionHasChanged: function () {
+                return this.optionChanged;
             },
 
             getCategories: function () {
@@ -54,8 +75,8 @@ export default function (dim, BaseAxisModelClass, axisTypeDefaulter, extraDefaul
                 return this.__ordinalMeta;
             },
 
-            defaultOption: echarts.util.merge(
-                echarts.util.clone(axisDefault[axisType + 'Axis3D']),
+            defaultOption: zrUtil.merge(
+                zrUtil.clone(axisDefault[axisType + 'Axis3D']),
                 extraDefaultOption || {},
                 true
             )
@@ -65,6 +86,6 @@ export default function (dim, BaseAxisModelClass, axisTypeDefaulter, extraDefaul
     // TODO
     BaseAxisModelClass.superClass.registerSubTypeDefaulter(
         dim + 'Axis3D',
-        echarts.util.curry(axisTypeDefaulter, dim)
+        zrUtil.curry(axisTypeDefaulter, dim)
     );
 };
