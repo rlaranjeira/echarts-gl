@@ -46,9 +46,7 @@ var Colormap3DSeries = SurfaceSeries.extend({
         var list = this.getRawData();
         var dims = ['x', 'y', 'z'];
 
-        if (!list || mode == 'build') {
-            return createList(this, dims, data);
-        } else if (mode == 'append') {
+        if (mode == 'append') {
             var shift = list.count() >= option.size;
 
             if (shift) {
@@ -61,6 +59,8 @@ var Colormap3DSeries = SurfaceSeries.extend({
         } else if (mode == 'update') {
             list.getItemVisuals().length -= dataLength;
             list.updateData(data);
+        } else {
+            return createList(this, dims, data);
         }
 
         return list;
