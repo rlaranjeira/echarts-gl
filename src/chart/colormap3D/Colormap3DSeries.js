@@ -47,9 +47,9 @@ var Colormap3DSeries = SurfaceSeries.extend({
         var dims = ['x', 'y', 'z'];
 
         if (mode == 'append') {
-            var shift = list.count() >= option.size;
+            var shift = list.count() + dataLength - option.size;
 
-            if (shift) {
+            if (shift > 0) {
                 list.setItemVisuals(
                   list.getItemVisuals().slice(dataLength)
                 );
