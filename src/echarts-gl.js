@@ -36,8 +36,8 @@
 var echartsGl = {
     version: '1.1.1',
     dependencies: {
-        echarts: '4.1.0',
-        claygl: '1.2.1'
+        echarts: '4.2.1',
+        claygl: '1.3.0'
     }
 };
 import echarts from 'echarts/lib/echarts';
