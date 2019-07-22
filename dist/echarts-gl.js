@@ -7,7 +7,7 @@
 		exports["echarts-gl"] = factory(require("echarts"));
 	else
 		root["echarts-gl"] = factory(root["echarts"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -28873,8 +28873,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var echartsGl = {
     version: '1.1.1',
     dependencies: {
-        echarts: '4.1.0',
-        claygl: '1.2.1'
+        echarts: '4.2.1',
+        claygl: '1.3.0'
     }
 };
 
@@ -51558,9 +51558,9 @@ var Colormap3DSeries = __WEBPACK_IMPORTED_MODULE_0__surface_SurfaceSeries__["a" 
         var dims = ['x', 'y', 'z'];
 
         if (mode == 'append') {
-            var shift = list.count() >= option.size;
+            var shift = list.count() + dataLength - option.size;
 
-            if (shift) {
+            if (shift > 0) {
                 list.setItemVisuals(
                   list.getItemVisuals().slice(dataLength)
                 );
