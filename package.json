@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "claygl": "1.3.0",
-    "@sct/zrender": "4.0.7-12"
+    "@sct/zrender": "4.1.0-1"
   },
   "main": "dist/echarts-gl.js",
   "repository": {
