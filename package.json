@@ -1,7 +1,7 @@
 {
   "name": "@sct/echarts-gl",
   "description": "Extension pack of ECharts providing 3D plots and globe visualization",
-  "version": "1.1.1-11",
+  "version": "1.1.1-12",
   "maintainers": [
     {
       "name": "Yi Shen"
